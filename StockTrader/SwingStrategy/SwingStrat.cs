@@ -137,12 +137,12 @@ using IEXDataLibrary;
                 //now average and moving average have been compared
                 //now evaluate swing
                 //Compare averages, if 5 day moving average is < 20 day ,that is a buy
-                if (movingaverage * .85 > sum)
+                if (movingaverage * .85 < s_average)
                 { s_buy = 1; }
-                else if (movingaverage * .85 < sum)
+                else if (movingaverage * .85 > s_average)
                 { s_buy = 0; }
 
-   
+
             }
 
 
