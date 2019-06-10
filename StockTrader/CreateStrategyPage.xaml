@@ -149,7 +149,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.ColumnSpan="3" FontSize="36" FontWeight="Bold" Margin="20,10,0,10" Text="Swing Strategy Design Parameters" Foreground="Black"/>
-                <TextBlock Grid.ColumnSpan="3" FontSize="18" FontWeight="Bold" Margin="30,50,0,10" Text="The Swing Strategy of Trading aims to capture gains over a period of several days to several weeks." Foreground="Black"/>
+                <TextBlock Grid.ColumnSpan="3" FontSize="18" FontWeight="Bold" Margin="25,75,0,20" Text="The Swing Strategy of Trading aims to capture gains over a period of several days to several weeks." Foreground="Black"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal">
                     <TextBlock Text="Name This Strategy:" Foreground="Black" Margin="25,10,150,0" Width="200"/>
@@ -162,8 +162,8 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal">
-                    <TextBlock Text="How many days to evaluate:" Foreground="Black" Margin="25,10,150,0" SelectionChanged="TextBlock_SelectionChanged" Width="200"/>
-                    <ComboBox x:Name="DaySelectionForSwing" Margin="0,5,0,0" Width="200" SelectionChanged="DaySelectionForSwingComboBox_SelectionChanged" Height="35">
+                    <TextBlock Text="How many days to evaluate:" Foreground="Black" Margin="25,0,150,0" SelectionChanged="TextBlock_SelectionChanged" Width="200"/>
+                    <ComboBox x:Name="DaySelectionForSwing" Margin="0,0,0,0" Width="200" SelectionChanged="DaySelectionForSwingComboBox_SelectionChanged" Height="35">
                         <ComboBoxItem x:Name="SwingStrategy10Day" Content="10 Days" />
                         <ComboBoxItem x:Name="SwingStrategy15Day" Content="15 Days" />
                         <ComboBoxItem x:Name="SwingStrategy20Day" Content="20 Days" />

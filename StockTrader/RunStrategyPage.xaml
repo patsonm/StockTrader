@@ -48,6 +48,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
@@ -116,8 +117,9 @@
                                 </RelativePanel>
                             </Grid>
 
+                            <Button Name="RemoveRunningStrategyButton" Grid.Row="1" Content="Remove Strategy" Margin="10,0,0,15" Visibility="Collapsed" Click="RemoveRunningStrategyButton_Click"/>
 
-                            <Grid Grid.Row="1" Name="ListingHeader">
+                            <Grid Grid.Row="2" Name="ListingHeader">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5*" />
                                     <ColumnDefinition Width="2*" />
@@ -141,10 +143,10 @@
 
 
                             <!-- put list view in the second row-->
-                            <GridView x:Name="RunningStrategiesListView" Grid.Row="2" ItemsSource="{x:Bind runningStrategies, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="RunningStrategiesListView_ItemClick">
-                                <GridView.ItemTemplate>
+                            <ListView x:Name="RunningStrategiesListView" Grid.Row="3" ItemsSource="{x:Bind runningStrategies, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="RunningStrategiesListView_ItemClick">
+                                <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="data:RunningStrategy">
-                                        <Grid Width="{Binding ActualWidth, ElementName=ListingHeader, Mode=OneWay}">
+                                        <Grid Width="{Binding ActualWidth, ElementName=ListingHeader, Mode=TwoWay}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="5*" />
                                                 <ColumnDefinition Width="2*" />
@@ -166,10 +168,10 @@
                                             <TextBlock Grid.Column="7" Text="{x:Bind m_similarityThreshold, Mode=OneWay}" Foreground="White" HorizontalAlignment="Center"/>
                                         </Grid>
                                     </DataTemplate>
-                                </GridView.ItemTemplate>
-                            </GridView>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
-                            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,0,0,0">
+                            <Border Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="2,0,0,0">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />

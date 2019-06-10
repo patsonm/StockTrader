@@ -39,6 +39,7 @@ namespace StockTrader
         public List<TickerAutoSuggestionEntry> tickerSuggestions;
 
         public int m_selectedIndex;
+        public int m_selectedRunningStrategyIndex;
 
         private ApplicationTrigger _AppTrigger;
 
@@ -206,15 +207,7 @@ namespace StockTrader
 
             if (bucket < 1 || bucket > MainPage.runningBucketStrategies[m_selectedIndex].m_categories.Count())
                 return;
-/*
-            var requestStatus = await BackgroundExecutionManager.RequestAccessAsync();
-            if (requestStatus != BackgroundAccessStatus.AlwaysAllowed)
-            {
-                // Depending on the value of requestStatus, provide an appropriate response
-                // such as notifying the user which functionality won't work as expected
-                return;
-            }
-*/
+
             // create a list of tickers to trade and populate it
             List<string> tickersToTrade = new List<string>();
             foreach (var entry in stocksToRunStrategyOn)
@@ -274,14 +267,12 @@ namespace StockTrader
                 rs.m_bucketInUse,
                 rs.m_startDate);
 
-
-
             return true;
         }
 
         private void OnCompleted(IBackgroundTaskRegistration task, BackgroundTaskCompletedEventArgs args)
         {
-            int iii = 1;
+            
         }
 
         private bool BucketStrategyBackgroundExists(string taskName)
@@ -300,7 +291,11 @@ namespace StockTrader
         
         private void RunningStrategiesListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            RemoveRunningStrategyButton.Visibility = Visibility.Visible;
+
             targetedStocks.Clear();
+
+            m_selectedRunningStrategyIndex = runningStrategies.IndexOf(((RunningStrategy)e.ClickedItem));
 
             foreach(var tic in ((RunningStrategy)e.ClickedItem).m_tickersToTrade)
                 targetedStocks.Add(new TargetedStockEntry() { ticker = tic.ToUpper() });
@@ -374,6 +369,18 @@ namespace StockTrader
 
             if (removeAtIndex != -1)
                 stocksToRunStrategyOn.RemoveAt(removeAtIndex);
+        }
+
+        private void RemoveRunningStrategyButton_Click(object sender, RoutedEventArgs e)
+        {     
+            RunningStrategy rs = runningStrategies[m_selectedRunningStrategyIndex];        
+
+            SQLiteAccess.RemoveRunningBucketStrategy(
+                rs.m_strategyName, 
+                rs.m_bucketInUse,
+                rs.m_startDate);
+
+            runningStrategies.RemoveAt(m_selectedRunningStrategyIndex);
         }
     }
 }

@@ -39,7 +39,11 @@ namespace SQLiteAccessLibrary
                     "data_point_index INT," +
                     "value DOUBLE," +
                     "CONSTRAINT pk_strategyTicker PRIMARY KEY(strategyName, category_index, entry_index, data_point_index))");
-                               
+
+                tables.Add("DROP TABLE RunningBucketStrategies");
+                tables.Add("DROP TABLE RunningBucketStrategyTickers");
+                tables.Add("DROP TABLE RunningBucketStrategyTrades");
+
                 tables.Add("CREATE TABLE IF NOT EXISTS RunningBucketStrategies (" +
                     "strategyName VARCHAR(50)," +
                     "dataTimeFrame VARCHAR(15)," +
@@ -414,28 +418,53 @@ namespace SQLiteAccessLibrary
         {
             int numberOfTrades = 0;
 
+            using (SqliteConnection db = new SqliteConnection("Filename=data.db"))
+            {
+                db.Open();
+
+                // create the select all command
+                SqliteCommand selectCommand = new SqliteCommand("SELECT * FROM RunningBucketStrategyTrades WHERE strategyName = @strategyName", db);
+                selectCommand.Parameters.AddWithValue("@strategyName", strategyName);
+
+                SqliteDataReader query = selectCommand.ExecuteReader();
+
+                while (query.Read())
+                {
+                    ++numberOfTrades;
+                }
+
+                db.Close();
+            }
+
             return numberOfTrades;
-
-
-
-
-
-
-
         }
 
         public static double ComputeROR(string strategyName)
         {
-            double ROR = 0;
+            double ROR = 1.0;
+            double buy, sell;
 
-            return ROR;
+            using (SqliteConnection db = new SqliteConnection("Filename=data.db"))
+            {
+                db.Open();
 
+                // create the select all command
+                SqliteCommand selectCommand = new SqliteCommand("SELECT * FROM RunningBucketStrategyTrades WHERE strategyName = @strategyName", db);
+                selectCommand.Parameters.AddWithValue("@strategyName", strategyName);
 
+                SqliteDataReader query = selectCommand.ExecuteReader();
 
+                while (query.Read())
+                {
+                    buy = query.GetDouble(4);
+                    sell = query.GetDouble(5);
+                    ROR *= (((sell - buy) / buy) + 1);
+                }
 
+                db.Close();
+            }
 
-
-
+            return (ROR - 1) * 100; // convert it to a percent
         }
 
         public static List<_RunningStrategy> GetAllRunningBucketStrategies()
@@ -742,6 +771,23 @@ namespace SQLiteAccessLibrary
             }
         }
 
+        public static void RemoveRunningBucketStrategy(string strategyName, int bucketNumber, string startDate)
+        {
+            using (SqliteConnection db = new SqliteConnection("Filename=data.db"))
+            {
+                db.Open();
+
+                // create the select all command
+                SqliteCommand deleteCommand = new SqliteCommand("DELETE FROM RunningBucketStrategies WHERE strategyName = @strategyName AND bucketNumber = @bucketNumber AND startDate = @startDate", db);
+                deleteCommand.Parameters.AddWithValue("@strategyName", strategyName);
+                deleteCommand.Parameters.AddWithValue("@bucketNumber", bucketNumber);
+                deleteCommand.Parameters.AddWithValue("@startDate", startDate);
+
+                SqliteDataReader query = deleteCommand.ExecuteReader();
+
+                db.Close();
+            }
+        }
 
         /* **********************************************************************************************
          * Add a strategy to the swing strategy table
