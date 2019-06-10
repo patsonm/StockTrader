@@ -72,7 +72,7 @@ namespace StockTrader
             // Make each page invisible to start
             BucketStrategyGrid.Visibility = Visibility.Collapsed;
             MachineLearningStrategy1Grid.Visibility = Visibility.Collapsed;
-            MachineLearningStrategy2Grid.Visibility = Visibility.Collapsed;
+           // MachineLearningStrategy2Grid.Visibility = Visibility.Collapsed;
             SwingStradingStrategyGrid.Visibility = Visibility.Collapsed;
 
             // Now only show the one corresponding the to selected choice
@@ -80,8 +80,8 @@ namespace StockTrader
                 BucketStrategyGrid.Visibility = Visibility.Visible;
             else if (StrategySelectionMLStrategy1.IsSelected)
                 MachineLearningStrategy1Grid.Visibility = Visibility.Visible;
-            else if (StrategySelectionMLStrategy2.IsSelected)
-                MachineLearningStrategy2Grid.Visibility = Visibility.Visible;
+            //else if (StrategySelectionMLStrategy2.IsSelected)
+            //    MachineLearningStrategy2Grid.Visibility = Visibility.Visible;
             else if (StrategySwingTradingStrategy.IsSelected)
                 SwingStradingStrategyGrid.Visibility = Visibility.Visible;
             else        
@@ -176,6 +176,7 @@ namespace StockTrader
                 if(!found)
                     addedStockList.Add(new AddedStock(AddTickerAutoSuggestBox.Text.ToUpper()));
             }
+
 
 
             //swing
@@ -321,8 +322,27 @@ namespace StockTrader
 
 
         }
+        /*
+            this function will provide the user interface to get predictions
+             */
 
-
+        private async void submit_button_Click(object sender, RoutedEventArgs e)
+        {
+            //get text from input box
+            String text = Input_ticker.Text;
+            //pass text to ML interface
+            int result = await ML_Model.ML_interface.GetPrediction(text);
+            if (result == 0)
+            {
+                //print ignore signal
+                Result_display.Text = "Ignore/Sell";
+            }
+            else if (result == 1)
+            {
+                //print buy signal
+                Result_display.Text = "Buy/Hold";
+            }
+        }
 
 
         private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
@@ -337,6 +357,17 @@ namespace StockTrader
         
 
         private void BucketStrategyFutureReturnComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Input_ticker_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Input_ticker.Text = string.Empty;
+            Input_ticker.GotFocus -= Input_ticker_GotFocus;
+        }
+
+        private void Input_ticker_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
 
         }
