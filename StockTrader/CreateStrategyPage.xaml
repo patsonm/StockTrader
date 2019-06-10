@@ -89,7 +89,7 @@
                     <TextBlock Foreground="Black" Text="Which normalization function to use?" Margin="5,5,10,0" />
                     <ComboBox Name="BucketStrategyNormalizationFunctionComboBox" Width="200">
                         <ComboBoxItem Name="BucketStrategyNormalizationFunctionDivideByMax" Content="Divide By Max" />
-                        <ComboBoxItem Name="BucketStrategyNormalizationFunctionSlopes" Content="Slopes" />
+       <!--                 <ComboBoxItem Name="BucketStrategyNormalizationFunctionSlopes" Content="Slopes" /> -->
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="20,10,0,0">
@@ -120,15 +120,28 @@
             </Grid>
 
             <Grid Name="MachineLearningStrategy1Grid" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
                 <TextBlock FontSize="36" FontWeight="Bold" Margin="50,10,0,10" Text="Machine Learning Prediction" Foreground="Black"/>
-                <TextBlock HorizontalAlignment="Left" Text="Get Prediction from Trained Model" TextWrapping="Wrap" VerticalAlignment="Top" Margin="226,66,0,0" Height="83" Width="668" FontSize="36"/>
-                <Border Margin="8" BorderThickness="1" BorderBrush="Black" Width="185" Height="65">
-                <TextBlock x:Name="Result_display"   Foreground="Black" Text="Results"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-                <AutoSuggestBox x:Name="Input_ticker" HorizontalAlignment="Left" Text="Type Ticker Here" VerticalAlignment="Top" Margin="306,238,0,0" Height="35" Width="275" FontSize="22"
+
+                <TextBlock Grid.Row="1" Text="Get Prediction from Trained Model" Foreground="Black" FontSize="36" Margin="50,0,0,0" />
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <AutoSuggestBox Grid.Row="2" x:Name="Input_ticker" Margin="50,10,30,10" Text="Type Ticker Here" Height="35" Width="275" HorizontalAlignment="Left" FontSize="22"
                          GotFocus="Input_ticker_GotFocus" TextChanged="AddTickerAutoSuggestBox_TextChanged" SuggestionChosen="AddTickerAutoSuggestBox_SuggestionChosen"/>
-                <Button x:Name="submit_button" Content="Submit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="630,238,0,0" Click="submit_button_Click" />
+
+                    <Button x:Name="submit_button" Grid.Row="2" Grid.Column="1" Content="Submit" Foreground="Black" Background="Gray"  Click="submit_button_Click" />
+                </StackPanel>
+
+                <Border Grid.Row="3" Grid.ColumnSpan="2"  BorderThickness="1" BorderBrush="Black" Width="185" Height="65">
+                    <TextBlock x:Name="Result_display" Foreground="Black" Text="Results" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
             </Grid>
 
             

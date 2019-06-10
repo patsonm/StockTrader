@@ -28,9 +28,11 @@
                     <Border BorderBrush="White" BorderThickness="1,1,1,0">
                         <Button Name="ShowRunningStrategiesButton" Content="Running Strategies" Height="50" Width="150" Click="ShowRunningStrategiesButton_Click"/>
                     </Border>
+                    <!--
                     <Border BorderBrush="White" BorderThickness="0,1,1,0">
                         <Button Name="ShowPerformanceButton" Content="Trading Performance" Height="50" Width="150" Click="ShowPerformanceButton_Click"/>
                     </Border>
+                    -->
                 </StackPanel>
             </Grid>
 
@@ -38,9 +40,9 @@
                 <Grid>
                     <Grid Name="RunningStrategiesListGrid">
                         <Grid Name="RunningSwingStrategyGrid" >
-                            
-                            
-                            
+
+                            <TextBlock Text="Swing Strategy real-time functionality not yet implemented" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
                         </Grid>                      
                         
 

@@ -94,6 +94,9 @@ namespace StockTrader
 
         private void LoadBucketStrategy(BucketStrategyEntry strategyEntry)
         {
+            ShowStrategySummaryButton.Visibility = Visibility.Visible;
+            ShowTestPageButton.Visibility = Visibility.Visible;
+
             DisplaySwingStrategySummary.Visibility = Visibility.Collapsed;
             DisplayBucketStrategySummary.Visibility = Visibility.Visible;
 
@@ -147,6 +150,9 @@ namespace StockTrader
 
         private void LoadSwingStrategy(SwingStrategyEntry strategyEntry)
         {
+            ShowStrategySummaryButton.Visibility = Visibility.Collapsed;
+            ShowTestPageButton.Visibility = Visibility.Collapsed;
+
             SelectedStrategyTextBlock.Text = strategyEntry.StrategyName;
 
             //turns on grid

@@ -40,10 +40,6 @@ namespace SQLiteAccessLibrary
                     "value DOUBLE," +
                     "CONSTRAINT pk_strategyTicker PRIMARY KEY(strategyName, category_index, entry_index, data_point_index))");
 
-                tables.Add("DROP TABLE RunningBucketStrategies");
-                tables.Add("DROP TABLE RunningBucketStrategyTickers");
-                tables.Add("DROP TABLE RunningBucketStrategyTrades");
-
                 tables.Add("CREATE TABLE IF NOT EXISTS RunningBucketStrategies (" +
                     "strategyName VARCHAR(50)," +
                     "dataTimeFrame VARCHAR(15)," +
